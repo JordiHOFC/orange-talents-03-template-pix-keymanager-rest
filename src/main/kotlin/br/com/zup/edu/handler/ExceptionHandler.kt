@@ -14,9 +14,10 @@ import javax.inject.Singleton
 @InterceptorBean(ErroHandler::class)
 class ExceptionHandler : MethodInterceptor<ControllerGRPC, HttpResponse<*>> {
     private val LOGGER = LoggerFactory.getLogger(this.javaClass)
-    override fun intercept(context: MethodInvocationContext<ControllerGRPC, HttpResponse<*>>?): HttpResponse<*>? {
+    override fun intercept(context: MethodInvocationContext<ControllerGRPC, HttpResponse<*>>): HttpResponse<*>? {
         try {
-            context!!.proceed()
+
+           return  context!!.proceed()
         }
         catch (e: StatusRuntimeException) {
            return when(e.status){
@@ -32,6 +33,5 @@ class ExceptionHandler : MethodInterceptor<ControllerGRPC, HttpResponse<*>> {
               }
            }
         }
-        return null
     }
 }
