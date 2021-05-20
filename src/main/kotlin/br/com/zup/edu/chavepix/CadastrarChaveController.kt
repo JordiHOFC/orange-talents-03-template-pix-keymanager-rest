@@ -11,6 +11,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
+import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.validation.Valid
 
@@ -20,12 +21,13 @@ import javax.validation.Valid
 class CadastrarChaveController(
         @Inject private  val grpcCLient: PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub,
 ):ControllerGRPC {
+
     @Post("/keys")
     fun registrarChave(@Body @Valid request:ChaveRequest):HttpResponse<*>{
         val requestGrpc = request.paraPixKeyRegister()
         val cadastrarChave = grpcCLient.cadastrarChave(requestGrpc)
-        val location = UriBuilder.of("/keys/{id}").expand(mutableMapOf(Pair("id", cadastrarChave.idPix)))
         return HttpResponse.status<Unit>(CREATED)
+
     }
 
 }

@@ -4,6 +4,7 @@ import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.ConstraintValidator
 import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
 import javax.validation.Constraint
+import javax.validation.ReportAsSingleViolation
 import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.*
 import kotlin.reflect.KClass
@@ -11,6 +12,7 @@ import kotlin.reflect.KClass
 @MustBeDocumented
 @Target(FIELD, CONSTRUCTOR,TYPE, CLASS)
 @Retention(RUNTIME)
+@ReportAsSingleViolation
 @Constraint(validatedBy = [ValidaChaveValidator::class])
 annotation class ValidaChave(
     val message: String = "Chave em formato invalido.",

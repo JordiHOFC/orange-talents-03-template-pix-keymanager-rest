@@ -17,21 +17,25 @@ class ExceptionHandler : MethodInterceptor<ControllerGRPC, HttpResponse<*>> {
     override fun intercept(context: MethodInvocationContext<ControllerGRPC, HttpResponse<*>>): HttpResponse<*>? {
         try {
 
-           return  context!!.proceed()
-        }
-        catch (e: StatusRuntimeException) {
-           return when(e.status){
-              Status.ALREADY_EXISTS->{
-                  LOGGER.info(e.message)
-                  val indexOf = e.message!!.indexOf(":")
-                  HttpResponse.status<ErrorAPI>(HttpStatus.UNPROCESSABLE_ENTITY).body(ErrorAPI(e.message!!.substring(indexOf + 2)))
-              }
-              else ->{
-                  LOGGER.info(e.message)
-                  val indexOf = e.message!!.indexOf(":")
-                  HttpResponse.status<ErrorAPI>(HttpStatus.BAD_REQUEST).body(ErrorAPI(e.message!!.substring(indexOf + 2)))
-              }
-           }
+            return context.proceed()
+        } catch (e: StatusRuntimeException) {
+            return when (e.status.code.toStatus().code) {
+                Status.ALREADY_EXISTS.code -> {
+                    LOGGER.info(e.message)
+                    val indexOf = e.message!!.indexOf(":")
+                    HttpResponse.status<ErrorAPI>(HttpStatus.UNPROCESSABLE_ENTITY).body(ErrorAPI(e.message!!.substring(indexOf + 2)))
+                }
+                Status.NOT_FOUND.code-> {
+                    LOGGER.info(e.message)
+                    val indexOf = e.message!!.indexOf(":")
+                    HttpResponse.status<ErrorAPI>(HttpStatus.NOT_FOUND).body(ErrorAPI(e.message!!.substring(indexOf + 2)))
+                }
+                else-> {
+                    LOGGER.info(e.message)
+                    val indexOf = e.message!!.indexOf(":")
+                    HttpResponse.status<ErrorAPI>(HttpStatus.BAD_REQUEST).body(ErrorAPI(e.message!!.substring(indexOf + 2)))
+                }
+            }
         }
     }
 }
