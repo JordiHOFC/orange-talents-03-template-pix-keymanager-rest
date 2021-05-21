@@ -35,5 +35,5 @@ data class ChaveResponse(
         val id:String,
         val tipoDaChave: TipoDaChave,
         val tipoDaConta: TipoDaConta,
-        @field:JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss") val criadoEm: LocalDateTime
+        @field:JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") val criadoEm: LocalDateTime
 )
