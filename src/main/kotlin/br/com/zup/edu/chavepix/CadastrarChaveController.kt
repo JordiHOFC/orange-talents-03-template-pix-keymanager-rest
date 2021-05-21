@@ -16,13 +16,13 @@ import javax.inject.Inject
 import javax.validation.Valid
 
 @Validated
-@Controller("/api/v1")
+@Controller("/api/v1/keys")
 @ErroHandler
 class CadastrarChaveController(
         @Inject private  val grpcCLient: PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub,
 ):ControllerGRPC {
 
-    @Post("/keys")
+    @Post
     fun registrarChave(@Body @Valid request:ChaveRequest):HttpResponse<*>{
         val requestGrpc = request.paraPixKeyRegister()
         val cadastrarChave = grpcCLient.cadastrarChave(requestGrpc)
