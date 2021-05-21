@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Factory
 class GrpcClientFactory {
-    @Bean
+    @Singleton
     fun registerStub(@GrpcChannel("keymanager") channel: ManagedChannel): PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub {
         return PixKeyManagerGRpcServiceGrpc.newBlockingStub(channel)
     }
-    @Bean
+    @Singleton
     fun removeStub(@GrpcChannel("keymanager")channel: ManagedChannel):RemoveKeyManagerGrpcServiceGrpc.RemoveKeyManagerGrpcServiceBlockingStub {
         return RemoveKeyManagerGrpcServiceGrpc.newBlockingStub(channel)
     }

@@ -25,7 +25,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@MicronautTest(transactional = false, startApplication = true)
+@MicronautTest
 internal class CadastrarChaveControllerTest {
     @field:Inject
     @field:Client("/")
@@ -170,11 +170,11 @@ internal class CadastrarChaveControllerTest {
     }
 
 
-    @Factory
-    @Replaces(factory = GrpcClientFactory::class)
-    class MockStubFactory {
+//    @Factory
+//    @Replaces(factory = GrpcClientFactory::class)
+//    class MockStubFactory {
         @Singleton
         @Replaces(bean = PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class)
         fun blockingStub() = Mockito.mock(PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class.java)
-    }
+//    }
 }

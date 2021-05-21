@@ -24,7 +24,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@MicronautTest(transactional = false,startApplication = true)
+@MicronautTest
 internal class RemoverChaveControllerTest {
     @field:Inject
     @field:Client("/")
@@ -45,14 +45,13 @@ internal class RemoverChaveControllerTest {
     }
 
 
-
     @Test
     internal fun `nao deve remover  chave com pix id e id portador nulo`() {
         val removerChaveRequest = RemoverChaveRequest(
                 idPortador = "",
                 idChave = ""
         )
-       //  given(grpcRClient.removerChave(Mockito.any())).willReturn(null)
+        //  given(grpcRClient.removerChave(Mockito.any())).willReturn(null)
         val request = HttpRequest.DELETE("/api/v1/keys", removerChaveRequest)
         val e = assertThrows<HttpClientResponseException> {
             val response = httpClient.toBlocking().exchange(request, ChaveRequest::class.java)
@@ -102,11 +101,9 @@ internal class RemoverChaveControllerTest {
     }
 
 
-    @Factory
-    @Replaces(factory = GrpcClientFactory::class)
-    class MockStubFactory {
-        @Singleton
-        @Replaces(bean =RemoveKeyManagerGrpcServiceGrpc.RemoveKeyManagerGrpcServiceBlockingStub::class)
-        fun blockingStub() = Mockito.mock(RemoveKeyManagerGrpcServiceGrpc.RemoveKeyManagerGrpcServiceBlockingStub::class.java)
-    }
+
+    @Singleton
+    @Replaces(bean = RemoveKeyManagerGrpcServiceGrpc.RemoveKeyManagerGrpcServiceBlockingStub::class)
+    fun blockingStub() = Mockito.mock(RemoveKeyManagerGrpcServiceGrpc.RemoveKeyManagerGrpcServiceBlockingStub::class.java)
+
 }
