@@ -4,13 +4,11 @@ import br.com.zup.edu.*
 import br.com.zup.edu.handler.ControllerGRPC
 import br.com.zup.edu.handler.ErroHandler
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.validation.Validated
 import javax.inject.Inject
-import javax.validation.Valid
 
 @Controller("/api/v1/keys")
 @ErroHandler
@@ -31,5 +29,7 @@ class ConsultarChaveController(
         val response = responseGrpc.paraConsultarChaveExternalResponse()
         return HttpResponse.ok(response)
     }
+
+
 }
 

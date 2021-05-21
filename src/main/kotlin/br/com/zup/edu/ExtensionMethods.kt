@@ -4,6 +4,7 @@ import br.com.zup.edu.chavepix.*
 import com.google.protobuf.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 fun SearchKeyResponse.paraConsultarChaveInternaResponse(): ConsultarChaveInternaResponse {
     val conta = ContaBancariaResponse(
