@@ -38,10 +38,12 @@ internal class CadastrarChaveControllerTest {
     fun restBefore() {
         Mockito.reset(grpcClient)
     }
+
     @AfterEach
     fun restAffter() {
         Mockito.reset(grpcClient)
     }
+
     @Test
     internal fun `nao deve cadastrar chave para tipo de chave e id portador invalido`() {
         val pixID = UUID.randomUUID().toString()
@@ -129,6 +131,7 @@ internal class CadastrarChaveControllerTest {
 
 
     }
+
     @Test
     internal fun `deve cobrir exceptions do status not found`() {
         val pixID = UUID.randomUUID().toString()
@@ -148,6 +151,7 @@ internal class CadastrarChaveControllerTest {
         }
 
     }
+
     @Test
     internal fun `deve cobrir exceptions que nao sejam already exists e notfound`() {
         val pixID = UUID.randomUUID().toString()
@@ -170,11 +174,8 @@ internal class CadastrarChaveControllerTest {
     }
 
 
-//    @Factory
-//    @Replaces(factory = GrpcClientFactory::class)
-//    class MockStubFactory {
-        @Singleton
-        @Replaces(bean = PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class)
-        fun blockingStub() = Mockito.mock(PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class.java)
-//    }
+    @Singleton
+    @Replaces(bean = PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class)
+    fun blockingStub() = Mockito.mock(PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class.java)
+
 }

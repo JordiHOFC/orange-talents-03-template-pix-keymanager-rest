@@ -20,8 +20,8 @@ class RemoverChaveController(
 ):ControllerGRPC {
 
     @Delete
-    fun deletarChave(@Valid @Body removerChaveRequest: RemoverChaveRequest):HttpResponse<*>{
-        grpcClient.removerChave(removerChaveRequest.paraRemoveKeyRequest())
+    fun deletarChave(@Valid @Body removeChaveRequest: RemoveChaveRequest):HttpResponse<*>{
+        grpcClient.removerChave(removeChaveRequest.paraRemoveKeyRequest())
         return HttpResponse.status<Unit>(NO_CONTENT)
     }
 

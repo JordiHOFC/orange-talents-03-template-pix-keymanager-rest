@@ -24,10 +24,3 @@ data class ChaveRequest(
     }
 }
 
-enum class TipoDaConta {
-    CONTA_CORRENTE,CONTA_POUPANCA
-}
-
-enum class TipoDaChave {
-    CPF,TELEFONECELULAR,EMAIL,CHAVEALEATORIA
-}
