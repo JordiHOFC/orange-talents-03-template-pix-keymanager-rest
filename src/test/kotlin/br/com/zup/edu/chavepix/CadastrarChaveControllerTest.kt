@@ -5,7 +5,6 @@ import br.com.zup.edu.PixKeyResponse
 import br.com.zup.edu.grpcclient.GrpcClientFactory
 import br.com.zup.edu.handler.ErrorAPI
 import io.grpc.Status
-import io.grpc.StatusRuntimeException
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.http.HttpRequest
@@ -13,20 +12,20 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.BDDMockito.given
+import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@MicronautTest(transactional = false,startApplication = true)
+@MicronautTest(transactional = false, startApplication = true)
 internal class CadastrarChaveControllerTest {
     @field:Inject
     @field:Client("/")
@@ -36,7 +35,11 @@ internal class CadastrarChaveControllerTest {
     lateinit var grpcClient: PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub
 
     @BeforeEach
-    fun rest(){
+    fun restBefore() {
+        Mockito.reset(grpcClient)
+    }
+    @AfterEach
+    fun restAffter() {
         Mockito.reset(grpcClient)
     }
     @Test
@@ -163,6 +166,7 @@ internal class CadastrarChaveControllerTest {
             val response = httpClient.toBlocking().retrieve(request, ErrorAPI::class.java)
         }
 
+
     }
 
 
@@ -170,6 +174,7 @@ internal class CadastrarChaveControllerTest {
     @Replaces(factory = GrpcClientFactory::class)
     class MockStubFactory {
         @Singleton
+        @Replaces(bean = PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class)
         fun blockingStub() = Mockito.mock(PixKeyManagerGRpcServiceGrpc.PixKeyManagerGRpcServiceBlockingStub::class.java)
     }
 }
