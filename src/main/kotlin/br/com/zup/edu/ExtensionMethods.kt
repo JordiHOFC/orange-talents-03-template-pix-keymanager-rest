@@ -55,3 +55,16 @@ fun paraSearchKeyRequest(idPortador:String, idChave: String):SearchKeyRequest{
 fun paraSearchKeyExternalRequest(chave: String):SearchKeyExternalRequest{
     return SearchKeyExternalRequest.newBuilder().setChave(chave).build()
 }
+fun Key.paraChaveResponse():ChaveResponse{
+    return ChaveResponse(
+            chave=this.chave,
+            id=this.idPix,
+            idPortador = this.idPortador,
+            tipoDaChave = TipoDaChave.valueOf(this.tipoChave.name),
+            tipoDaConta = TipoDaConta.valueOf(this.tipoConta.name),
+            criadoEm = this.criadoEm.paraLocalDateTime()
+    )
+}
+fun paraSearchAllKeyBearer(idPortador: String): SearchAllKeyBearerRequest {
+    return SearchAllKeyBearerRequest.newBuilder().setIdPortador(idPortador).build()
+}

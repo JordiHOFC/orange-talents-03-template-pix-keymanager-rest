@@ -18,6 +18,7 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito
+import org.mockito.Mockito.*
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,12 +40,12 @@ internal class ConsultarChaveControllerTest {
 
     @BeforeEach
     fun resetBeffore() {
-        Mockito.reset(grpcClient)
+        reset(grpcClient)
     }
 
     @AfterEach
     fun resetAfter() {
-        Mockito.reset(grpcClient)
+        reset(grpcClient)
     }
 
 
@@ -173,7 +174,12 @@ internal class ConsultarChaveControllerTest {
         }
 
     }
+
+    /*
+   * TESTES PARA LISTAGEM DE CHAVES
+   *
+   * */
     @Singleton
     @Replaces(bean = SearchPixKeyManagerGrpcServiceGrpc.SearchPixKeyManagerGrpcServiceBlockingStub::class)
-    fun blockingStub() = Mockito.mock(SearchPixKeyManagerGrpcServiceGrpc.SearchPixKeyManagerGrpcServiceBlockingStub::class.java)
+    fun blockingStub() = mock(SearchPixKeyManagerGrpcServiceGrpc.SearchPixKeyManagerGrpcServiceBlockingStub::class.java)
 }

@@ -28,3 +28,12 @@ data class ConsultarChaveExternalResponse(
         val nomePortador: String,
         val cpfPortador: String
 )
+
+data class ChaveResponse(
+        val chave:String,
+        val idPortador: String,
+        val id:String,
+        val tipoDaChave: TipoDaChave,
+        val tipoDaConta: TipoDaConta,
+        @field:JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss") val criadoEm: LocalDateTime
+)
